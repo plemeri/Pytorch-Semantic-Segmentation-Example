@@ -1,6 +1,6 @@
 # Pytorch-Semantic-Segmentation-Example
 Example for semantic segmentation with pytorch  
-This project is based on [Rethinking Atrous Convolution for Semantic Image Segmentation](https://arxiv.org/abs/1706.05587) and [Penn-Fudan Database for Pedestrian Detection and Segmentation](https://www.cis.upenn.edu/~jshi/ped_html/#pub1).
+This project is based on [Rethinking Atrous Convolution for Semantic Image Segmentation](https://arxiv.org/abs/1706.05587) and [Daimler Pedestrian Segmentation Benchmark](http://www.gavrila.net/Datasets/Daimler_Pedestrian_Benchmark_D/Daimler_Pedestrian_Segmentatio/daimler_pedestrian_segmentatio.html).
 
 ## Requirements
 * python 3.x
@@ -8,8 +8,8 @@ This project is based on [Rethinking Atrous Convolution for Semantic Image Segme
 * torchvision 0.4 or higher
 
 ## Dataset
-Please download dataset from this [link](https://www.cis.upenn.edu/~jshi/ped_html/PennFudanPed.zip).  
-Unzip the file and move `PennFudanPed` folder into the project folder.
+Please download dataset from this [link](http://www.gavrila.net/data/Daimler/bmvc13-flohr-gavrila/PedCut2013_SegmentationDataset.tar.gz).  
+Unzip the file and move `PedCut2013_SegmentationDataset` folder into the project folder.
 
 
 ## Train
