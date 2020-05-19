@@ -13,7 +13,7 @@ class Test:
         self.FLAGS = self.args()
 
         # dataset
-        self.dataset = PennFudanSegmentation(split='test')
+        self.dataset = PedestrianSegmentation(split='test')
         self.dataloader = DataLoader(self.dataset, 1, True, num_workers=4, drop_last=False)
 
         # model
