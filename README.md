@@ -7,8 +7,8 @@ Example for semantic segmentation with pytorch
 * torchvision 0.4 or higher
 
 ## Dataset
-Please download dataset from this [link](https://www.cis.upenn.edu/~jshi/ped_html/PennFudanPed.zip)
-Unzip the file and move `PennFudanPed` folder to the project folder.
+Please download dataset from this [link](https://www.cis.upenn.edu/~jshi/ped_html/PennFudanPed.zip).  
+Unzip the file and move `PennFudanPed` folder into the project folder.
 
 
 ## Train
