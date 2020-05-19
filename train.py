@@ -33,7 +33,7 @@ class Train:
         self.FLAGS = self.args()
 
         # dataset
-        self.dataset = PennFudanSegmentation()
+        self.dataset = PedestrianSegmentation(split='train')
         self.dataloader = DataLoader(self.dataset, self.FLAGS.batch_size, True, num_workers=4, drop_last=True)
 
         # model
