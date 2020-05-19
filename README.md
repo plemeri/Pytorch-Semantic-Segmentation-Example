@@ -26,7 +26,7 @@ Options:
 - `--epochs` (int) - Total number of epochs for training.
 - `--device_ids` (int nargs) - GPU device ids for training. If there is more than one GPU, the model will be trained with multiple GPUs.
 - `--ignore_mask` (int) - Every pixel with ignore_mask value will be ignored for both training and testing. 
-- `--checkpoint_dir` (float) - Checkpoint will be stored or loaded from this location. (
+- `--checkpoint_dir` (str) - Checkpoint will be stored or loaded from this location. (
 - `--save_per_epoch` (int) - every K epoch the model will be saved.
 
 ## Test (Evaluation)
@@ -40,5 +40,5 @@ Options:
 - `--class_num` (int) - Number of classes (for PennFudanPed, there are only background and foreground, so it's 2 classes).
 - `--stride` (int) - Output stride of backbone network. Choose from [8, 16].
 - `--ignore_mask` (int) - Every pixel with ignore_mask value will be ignored for both training and testing. 
-- `--checkpoint_dir` (float) - Checkpoint will be loaded from this location.
-- `--result_dir` (int) - every image, label, prediction will be saved to this location.
+- `--checkpoint_dir` (str) - Checkpoint will be loaded from this location.
+- `--result_dir` (str) - every image, label, prediction will be saved to this location.
