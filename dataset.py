@@ -5,54 +5,32 @@ from torchvision import transforms
 from custom_transforms import *
 
 
-class PennFudanSegmentation(Dataset):
-    def __init__(self, dataset_dir='./PennFudanPed', split='train'):
-        super(PennFudanSegmentation, self).__init__()
+class PedestrianSegmentation(Dataset):
+    def __init__(self, dataset_dir='./PedCut2013_SegmentationDataset', split='train'):
+        super(PedestrianSegmentation, self).__init__()
         self.dataset_dir = dataset_dir
         self.split = split
 
-        self.image_dir = os.path.join(self.dataset_dir, 'PNGImages')
-        self.label_dir = os.path.join(self.dataset_dir, 'PedMasks')
+        self.image_dir = os.path.join(self.dataset_dir, 'data', 'completeData', 'left_images')
+        self.label_dir = os.path.join(self.dataset_dir, 'data', 'completeData', 'left_groundTruth')
 
-        if os.path.isfile(os.path.join(self.dataset_dir, split + '.txt')) is False:
-            train_list = open(os.path.join(self.dataset_dir, 'train.txt'), 'w')
-            test_list = open(os.path.join(self.dataset_dir, 'test.txt'), 'w')
-
-            files = [os.path.splitext(file)[0] for file in os.listdir(self.image_dir)]
-            file_idx = np.linspace(0, len(files) - 1, len(files), dtype=int)
-            test_file_idx = np.random.choice(file_idx, len(files) // 5, replace=False)
-            train_file_idx = np.delete(file_idx, test_file_idx)
-
-            for i in test_file_idx:
-                test_list.writelines(files[i] + '\n')
-
-            for i in train_file_idx:
-                train_list.writelines(files[i] + '\n')
-
-            test_list.close()
-            train_list.close()
-
-        self.data_list = open(os.path.join(self.dataset_dir, split + '.txt'), 'r').read().split('\n')
-        self.data_list = [file for file in self.data_list if len(file) > 0]
-
-        self.image_list = [file + '.png' for file in self.data_list]
+        self.image_list = os.listdir(self.image_dir)
         self.image_list.sort()
 
-        self.label_list = [file + '_mask.png' for file in self.data_list]
+        self.label_list = os.listdir(self.label_dir)
         self.label_list.sort()
 
         if split == 'train':
             self.transform = transforms.Compose([
-                RemoveID(),
                 RandomHorizontalFlip(),
-                RandomScaleRandomCrop([512, 512], [512, 512], [0.8, 1.2], 255),
+                RandomScaleRandomCrop([128, 256], [128, 256], [0.8, 1.2], 255),
                 RandomGaussianBlur(),
                 Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
                 ToTensor()
             ])
         else:
             self.transform = transforms.Compose([
-                RemoveID(),
+                FixedSizedCenterCrop([128, 256]),
                 Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
                 ToTensor()
             ])
@@ -63,6 +41,7 @@ class PennFudanSegmentation(Dataset):
 
         image = Image.open(os.path.join(self.image_dir, image_item))
         label = Image.open(os.path.join(self.label_dir, label_item))
+        label = Image.fromarray(np.array(label).astype(np.uint8))
 
         sample = {'image': image, 'label': label}
         sample = self.transform(sample)
@@ -71,7 +50,7 @@ class PennFudanSegmentation(Dataset):
 
     def __len__(self):
         return len(self.image_list)
-
+    
 
 class Metrics:
     def __init__(self, class_num, ignore_mask):
