@@ -14,7 +14,7 @@ class Test:
 
         # dataset
         self.dataset = PedestrianSegmentation(split='test')
-        self.dataloader = DataLoader(self.dataset, 1, True, num_workers=4, drop_last=False)
+        self.dataloader = DataLoader(self.dataset, 1, shuffle=False, num_workers=4, drop_last=False)
 
         # model
         self.model = DeepLab(self.FLAGS.backbone, self.FLAGS.class_num, self.FLAGS.stride)
