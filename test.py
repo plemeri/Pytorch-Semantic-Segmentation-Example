@@ -100,8 +100,8 @@ class Test:
         parser.add_argument('--stride', type=int, default=16, choices=[8, 16])
         parser.add_argument('--device_ids', type=int, nargs='+', default=[0])
         parser.add_argument('--ignore_mask', type=int, default=255)
-        parser.add_argument('--checkpoint_dir', type=str, default='./checkpoint_pedcut')
-        parser.add_argument('--result_dir', type=str, default='./results2')
+        parser.add_argument('--checkpoint_dir', type=str, default='./checkpoint')
+        parser.add_argument('--result_dir', type=str, default='./results')
         return parser.parse_args()
 
 
