@@ -11,14 +11,35 @@ class PedestrianSegmentation(Dataset):
         self.dataset_dir = dataset_dir
         self.split = split
 
-        self.image_dir = os.path.join(self.dataset_dir, 'data', 'completeData', 'left_images')
-        self.label_dir = os.path.join(self.dataset_dir, 'data', 'completeData', 'left_groundTruth')
+        self.complete_image_dir = os.path.join(self.dataset_dir, 'data', 'completeData', 'left_images')
+        self.complete_label_dir = os.path.join(self.dataset_dir, 'data', 'completeData', 'left_groundTruth')
 
-        self.image_list = os.listdir(self.image_dir)
-        self.image_list.sort()
+        self.complete_image_list = os.listdir(self.complete_image_dir)
+        self.complete_image_list.sort()
 
-        self.label_list = os.listdir(self.label_dir)
-        self.label_list.sort()
+        self.complete_label_list = os.listdir(self.complete_label_dir)
+        self.complete_label_list.sort()
+
+        self.test_image_dir = os.path.join(self.dataset_dir, 'data', 'testData', 'left_images')
+        self.test_label_dir = os.path.join(self.dataset_dir, 'data', 'testData', 'left_groundTruth')
+
+        self.test_image_list = os.listdir(self.test_image_dir)
+        self.test_image_list.sort()
+
+        self.test_label_list = os.listdir(self.test_label_dir)
+        self.test_label_list.sort()
+
+        if split == 'train':
+            self.image_dir = self.complete_image_dir
+            self.label_dir = self.complete_label_dir
+            self.image_list = [img for img in self.complete_image_list if img not in self.test_image_list]
+            self.label_list = [lab for lab in self.complete_label_list if lab not in self.test_label_list]
+
+        else:
+            self.image_dir = self.test_image_dir
+            self.label_dir = self.test_label_dir
+            self.image_list = self.test_image_list
+            self.test_label_list = self.test_label_list
 
         if split == 'train':
             self.transform = transforms.Compose([
