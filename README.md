@@ -1,5 +1,7 @@
 # Pytorch-Semantic-Segmentation-Example
-Example for semantic segmentation with pytorch  
+Example for semantic segmentation with pytorch.  
+This repository is for [CSED514] Pattern Recognition on POSTECH.  
+
 This project is based on [Rethinking Atrous Convolution for Semantic Image Segmentation](https://arxiv.org/abs/1706.05587) and [Pyramid Scene Parsing Network](https://arxiv.org/abs/1612.01105) on [Daimler Pedestrian Segmentation Benchmark](http://www.gavrila.net/Datasets/Daimler_Pedestrian_Benchmark_D/Daimler_Pedestrian_Segmentatio/daimler_pedestrian_segmentatio.html).
 
 ## Requirements
