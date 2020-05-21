@@ -7,6 +7,7 @@ from torch.utils.data import DataLoader
 
 from dataset import *
 from deeplab import *
+from pspnet import *
 
 
 class PolyLr(_LRScheduler):
@@ -37,7 +38,7 @@ class Train:
         self.dataloader = DataLoader(self.dataset, self.FLAGS.batch_size, True, num_workers=4, drop_last=True)
 
         # model
-        self.model = DeepLab(self.FLAGS.backbone, self.FLAGS.class_num, self.FLAGS.stride)
+        self.model = eval(self.FLAGS.model)(self.FLAGS.backbone, self.FLAGS.class_num, self.FLAGS.stride)
         os.environ['CUDA_VISIBLE_DEVICES'] = ','.join([str(i) for i in self.FLAGS.device_ids])
         if len(self.FLAGS.device_ids) > 1:
             self.model = nn.DataParallel(self.model, device_ids=[i for i in range(len(self.FLAGS.device_ids))])
@@ -53,11 +54,11 @@ class Train:
                                 self.FLAGS.epochs * (len(self.dataset) // self.FLAGS.batch_size) + 1)
 
         # criterion (loss)
-        self.criterion = nn.CrossEntropyLoss(ignore_index=self.FLAGS.ignore_mask)
+        self.criterion = nn.CrossEntropyLoss(ignore_index=255)
         self.criterion = self.criterion.cuda()
 
         # metrics (accuracy, mean iou)
-        self.metrics = Metrics(self.FLAGS.class_num, self.FLAGS.ignore_mask)
+        self.metrics = Metrics(self.FLAGS.class_num, 255)
         self.global_step = 1
         self.last_epoch = 0
         self.cur_time = time.time()
@@ -145,14 +146,14 @@ class Train:
 
     def args(self):
         parser = argparse.ArgumentParser()
-        parser.add_argument('--backbone', type=str, default='ResNet50')
+        parser.add_argument('--model', type=str, default='DeepLab', choices=['DeepLab', 'PspNet'])
+        parser.add_argument('--backbone', type=str, default='ResNet50', choices=['ResNet18', 'ResNet50', 'ResNet101', 'ResNet152'])
         parser.add_argument('--class_num', type=int, default=2)
-        parser.add_argument('--stride', type=int, default=16)
-        parser.add_argument('--batch_size', type=int, default=8)
+        parser.add_argument('--stride', type=int, default=16,  choices=[8, 16])
+        parser.add_argument('--batch_size', type=int, default=32)
         parser.add_argument('--learning_rate', type=float, default=0.1)
-        parser.add_argument('--epochs', type=int, default=100)
-        parser.add_argument('--device_ids', type=int, nargs='+', default=[0, 1])
-        parser.add_argument('--ignore_mask', type=int, default=255)
+        parser.add_argument('--epochs', type=int, default=40)
+        parser.add_argument('--device_ids', type=int, nargs='+', default=[0])
         parser.add_argument('--checkpoint_dir', type=str, default='./checkpoint')
         parser.add_argument('--save_per_epoch', type=int, default=5)
         return parser.parse_args()
