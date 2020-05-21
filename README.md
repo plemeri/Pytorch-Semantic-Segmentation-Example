@@ -1,6 +1,6 @@
 # Pytorch-Semantic-Segmentation-Example
 Example for semantic segmentation with pytorch  
-This project is based on [Rethinking Atrous Convolution for Semantic Image Segmentation](https://arxiv.org/abs/1706.05587) and [Daimler Pedestrian Segmentation Benchmark](http://www.gavrila.net/Datasets/Daimler_Pedestrian_Benchmark_D/Daimler_Pedestrian_Segmentatio/daimler_pedestrian_segmentatio.html).
+This project is based on [Rethinking Atrous Convolution for Semantic Image Segmentation](https://arxiv.org/abs/1706.05587) and [Pyramid Scene Parsing Network](https://arxiv.org/abs/1612.01105) on [Daimler Pedestrian Segmentation Benchmark](http://www.gavrila.net/Datasets/Daimler_Pedestrian_Benchmark_D/Daimler_Pedestrian_Segmentatio/daimler_pedestrian_segmentatio.html).
 
 ## Requirements
 * python 3.x
