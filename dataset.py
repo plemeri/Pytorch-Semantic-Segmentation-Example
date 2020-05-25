@@ -39,7 +39,7 @@ class PedestrianSegmentation(Dataset):
             self.image_dir = self.test_image_dir
             self.label_dir = self.test_label_dir
             self.image_list = self.test_image_list
-            self.test_label_list = self.test_label_list
+            self.label_list = self.test_label_list
 
         if split == 'train':
             self.transform = transforms.Compose([
